@@ -50,6 +50,7 @@ func raymarch(org vec3, dir vec3) vec4 {
 
 func Fragment(position vec4, texCoord vec2, color vec4) vec4 {
 	v := -1.0 + 2.0*texCoord.xy/IResolution.xy
+	v.y *= -1
 	v.x *= IResolution.x / IResolution.y
 
 	org := vec3(0.0, -2.0, 4.0)

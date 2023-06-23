@@ -15,11 +15,13 @@ const (
 )
 
 type Game struct {
-	StarShader *ebiten.Shader
-	Time       int
-	RainImage  *ebiten.Image
-	CursorX    int
-	CursorY    int
+	CustomShader *ebiten.Shader
+	Time         int
+	RainImage    *ebiten.Image
+	Pirates0     *ebiten.Image
+	Pirates1     *ebiten.Image
+	CursorX      int
+	CursorY      int
 }
 
 func (g *Game) Update() error {
@@ -43,8 +45,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			},
 		},
 	}
-	//op.Images[0] = g.RainImage
-	screen.DrawRectShader(w, h, g.StarShader, op)
+	op.Images[0] = g.Pirates0
+	op.Images[1] = g.Pirates1
+	screen.DrawRectShader(w, h, g.CustomShader, op)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -55,7 +58,7 @@ func main() {
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Shader Test")
 
-	starShader, shaderErr := ebiten.NewShader(shader.Universe)
+	shaderToRender, shaderErr := ebiten.NewShader(shader.Pirates)
 	if shaderErr != nil {
 		fmt.Println("Shader Err: \n" + shaderErr.Error())
 		return
@@ -65,9 +68,21 @@ func main() {
 		fmt.Println("Image load Err: \n" + imageDecodeErr.Error())
 		return
 	}
+	pirates0, _, imageDecodeErr := image.Decode(bytes.NewReader(asset.Pirates0))
+	if imageDecodeErr != nil {
+		fmt.Println("Image load Err: \n" + imageDecodeErr.Error())
+		return
+	}
+	pirates1, _, imageDecodeErr := image.Decode(bytes.NewReader(asset.Pirates1))
+	if imageDecodeErr != nil {
+		fmt.Println("Image load Err: \n" + imageDecodeErr.Error())
+		return
+	}
 	game := &Game{
-		StarShader: starShader,
-		RainImage:  ebiten.NewImageFromImage(rainImage),
+		CustomShader: shaderToRender,
+		RainImage:    ebiten.NewImageFromImage(rainImage),
+		Pirates0:     ebiten.NewImageFromImage(pirates0),
+		Pirates1:     ebiten.NewImageFromImage(pirates1),
 	}
 
 	if err := ebiten.RunGame(game); err != nil {

@@ -9,6 +9,12 @@ import (
 var (
 	//go:embed rain.png
 	Rain []byte
+
+	//go:embed pirates-channel0.png
+	Pirates0 []byte
+
+	//go:embed pirates-channel1.png
+	Pirates1 []byte
 )
 
 func init() {

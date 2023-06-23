@@ -1,6 +1,6 @@
 //go:build ignore
 
-// credit to https://www.shadertoy.com/view/DdSczW
+// credit to https://www.shadertoy.com/view/ltffzl
 
 package shader
 

@@ -8,7 +8,7 @@ package shader
 
 // uniform variables
 var IResolution vec2
-var IMouse vec2
+var ICursor vec2
 var ITime float
 
 func N21(p vec2) float {
@@ -67,13 +67,13 @@ func NetLayer(st vec2, n float, t float) float {
 
 	m := 0.0
 	sparkle := 0.0
-	for i = 0; i < 9; i++ {
-		m += line(p[4], p[i], st)
-		d := length(st - p[i])
+	for j := 0; j < 9; j++ {
+		m += line(p[4], p[j], st)
+		d := length(st - p[j])
 
 		s := (0.005 / (d * d))
 		s *= smoothstep(1.0, 0.7, d)
-		pulse := sin((fract(p[i].x)+fract(p[i].y)+t)*5.0)*0.4 + 0.6
+		pulse := sin((fract(p[j].x)+fract(p[j].y)+t)*5.0)*0.4 + 0.6
 		pulse = pow(pulse, 20.0)
 
 		s *= pulse
@@ -93,7 +93,7 @@ func NetLayer(st vec2, n float, t float) float {
 
 func Fragment(position vec4, texCoord vec2, color vec4) vec4 {
 	uv := (texCoord - IResolution.xy*0.5) / IResolution.y
-	M := IMouse.xy/IResolution.xy - 0.5
+	M := ICursor.xy/IResolution.xy - 0.5
 
 	t := ITime * 0.1
 

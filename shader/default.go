@@ -17,4 +17,10 @@ var (
 
 	//go:embed universe.go
 	Universe []byte
+
+	//go:embed ethereal.go
+	Ethereal []byte
+
+	//go:embed pirates.go
+	Pirates []byte
 )
