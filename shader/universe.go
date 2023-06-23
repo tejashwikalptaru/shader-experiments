@@ -56,7 +56,7 @@ func NetLayer(st vec2, n float, t float) float {
 	id := floor(st) + n
 	st = fract(st) - 0.5
 
-	p := [9]vec2{vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0), vec2(0, 0)}
+	var p [9]vec2
 	i := 0
 	for y := -1.0; y <= 1.0; y++ {
 		for x := -1.0; x <= 1.0; x++ {
